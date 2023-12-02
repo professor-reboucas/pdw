@@ -1,0 +1,20 @@
+/* Estilo base do botão */
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.9s ease; /* Propriedade de transição */
+    transition: font-size 0.9s ease; /* Propriedade de transição */
+  }
+  
+  /* Estilo do botão após a modificação */
+  button.alterado {
+    background-color: #e74c3c;   
+    border: 1px solid red;
+    border-radius: 40px;
+    font-size: 160px;     
+  }

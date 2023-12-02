@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Exemplo de Formulário HTML</title>
+</head>
+<body>
+  <h1>Formulário</h1>
+
+  <form action="/submit" method="post">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" required><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br><br>
+
+    <label for="senha">Senha:</label>
+    <input type="password" id="senha" name="senha" required><br><br>
+
+    <label for="mensagem">Mensagem:</label><br>
+    <textarea id="mensagem" name="mensagem" rows="4" cols="30"></textarea><br><br>
+
+    <label for="genero">Gênero:</label>
+    <input type="radio" id="masculino" name="genero" value="masculino">
+    <label for="masculino">Masculino</label>
+    <input type="radio" id="feminino" name="genero" value="feminino">
+    <label for="feminino">Feminino</label><br><br>
+
+    <label for="interesses">Interesses:</label>
+    <input type="checkbox" id="esporte" name="interesses" value="esporte">
+    <label for="esporte">Esporte</label>
+    <input type="checkbox" id="tecnologia" name="interesses" value="tecnologia">
+    <label for="tecnologia">Tecnologia</label>
+    <input type="checkbox" id="musica" name="interesses" value="musica">
+    <label for="musica">Música</label><br><br>
+
+    <label for="estado">Estado:</label>
+    <select id="estado" name="estado">
+      <option value="sp">São Paulo</option>
+      <option value="rj">Rio de Janeiro</option>
+      <option value="mg">Minas Gerais</option>
+      <option value="rs">Rio Grande do Sul</option>
+    </select><br><br>
+
+    <input type="submit" value="Enviar">
+  </form>
+
+</body>
+</html>

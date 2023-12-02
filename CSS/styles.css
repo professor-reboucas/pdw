@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #008080;
+  }
+  
+  .minha-div {
+    background-color: #FFF8DC;
+    padding: 10px;
+    margin: 20px;
+  }
+  
+  h2 {
+    color: #800080;
+  }
+  
+  .minha-lista {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .minha-lista li {
+    background-color: #ADD8E6;
+    margin-bottom: 5px;
+  }

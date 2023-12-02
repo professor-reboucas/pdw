@@ -1,0 +1,18 @@
+/* Estilo base da caixa */
+.box {
+    width: 100px; height: 100px;
+    background-color: #3498db; position: relative;
+    animation-name: moveBox; /* Nome da animação */
+    animation-duration: 2s; /* Duração da animação */
+    animation-timing-function: ease-in-out; /* Função de temporização da animação */
+    animation-iteration-count: infinite; /* Número de vezes que a animação é reproduzida (infinito neste caso) */
+  }
+
+/* Definição da animação */
+@keyframes moveBox {
+    0% {    left: 0; }
+    50% { left: 200px; background-color: #e74c3c; }
+    100% { left: 0; background-color: #3498db; }
+  }
+  
+  
