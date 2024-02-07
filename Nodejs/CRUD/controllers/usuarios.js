@@ -4,7 +4,6 @@ let users = [];
 
 export const getUsers = (req, res) => {
     console.log(`Usuários do sistema: ${users}`);
-
     res.send(users);
 }
 
