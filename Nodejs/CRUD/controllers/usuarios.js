@@ -10,10 +10,10 @@ export const getUsers = (req, res) => {
 
 export const createUser = (req, res) => {   
     const user = req.body;
-
     users.push({...user, id: uuid()});
-    
-    console.log(`Userário [${user.username}] incluído no sistema.`);
+    const message = `Usuário [${user.username}] incluído no sistema.`
+    console.log(message);
+    res.status(201).send(message)
 };
 
 export const getUser = (req, res) => {
@@ -21,16 +21,17 @@ export const getUser = (req, res) => {
 };
 
 export const deleteUser = (req, res) => { 
-    console.log(`Usuário id ${req.params.id} foi removido`);
-    
     users = users.filter((user) => user.id !== req.params.id);
+    const message = `Usuário id ${req.params.id} foi removido`
+    console.log(message);
+    res.status(200).send(message)
 };
 
 export const updateUser =  (req,res) => {
     const user = users.find((user) => user.id === req.params.id);
-    
     user.username = req.body.username;
     user.age = req.body.age;
-
-    console.log(`Usuário alterado para ${req.body.username}. Idade alterada para ${req.body.age}`)
+    const message = `Usuário alterado para ${req.body.username}. Idade alterada para ${req.body.age}`
+    console.log(message);
+    res.status(200).send(message)    
 };
