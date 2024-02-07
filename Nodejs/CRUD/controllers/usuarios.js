@@ -17,7 +17,8 @@ export const createUser = (req, res) => {
 };
 
 export const getUser = (req, res) => {
-    res.send(req.params.id)
+    const user = users.find((user) => user.id === req.params.id);
+    res.send(user)
 };
 
 export const deleteUser = (req, res) => { 
