@@ -14,7 +14,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "uuid": "^8.2.0",
-    "pg": "^8.11.3"
+    "pg": "^8.11.3",
+    "cors": "^2.8.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

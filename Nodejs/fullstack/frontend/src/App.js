@@ -2,8 +2,9 @@ import "./App.css";
 import UsuarioService from "./services/usuario"
 import Grid from '@mui/material/Grid';
 import React, { useState } from "react";
+import axios from 'axios';
 
-const Usuario = new UsuarioService;
+const Usuario = new UsuarioService(axios, process.env.REACT_APP_BACKEND_URL);
 
 function App() {
   const [nome, setNome] = useState("");
@@ -15,7 +16,7 @@ function App() {
   const [flagNovoCadastro, setFlagNovoCadastro] = useState(true);
   const [usuarioEmEdicao, setUsuarioEmEdicao] = useState({});
 
-  const salvar = () => {
+  const salvar = async () => {
     const novo = {
       nome: nome,
       idade: idade,
@@ -23,12 +24,12 @@ function App() {
       estado: estado
     };
     if (flagNovoCadastro){
-      Usuario.add(novo);
+      await Usuario.add(novo);
     } else {
-      Usuario.update(usuarioEmEdicao, novo);
+      await Usuario.update(usuarioEmEdicao, novo);
       setUsuarioEmEdicao({})
     }
-    getUsuarios();
+    await getUsuarios();
     limpaForm();
   }
 
@@ -46,8 +47,8 @@ function App() {
     setEstado(dados.estado);
   }
 
-  const getUsuarios = () => {
-    const lista = Usuario.get();
+  const getUsuarios = async () => {
+    const lista = await Usuario.get();
     setUsuarioList(lista);
   }
 
@@ -64,9 +65,9 @@ function App() {
     setUsuarioEmEdicao(item);
   }
 
-  const removeUsuario = (item) => {
-    Usuario.remove(item);
-    getUsuarios();
+  const removeUsuario = async (item) => {
+    await Usuario.remove(item);
+    await getUsuarios();
   }
   
   return (

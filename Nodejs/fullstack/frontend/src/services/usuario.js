@@ -1,33 +1,22 @@
 class UsuarioService {
-    constructor() {
-      this.data = [];
+    constructor(axios, BACKEND_URL) {
+      this.BACKEND_URL = BACKEND_URL;
+      this.axios = axios;
      }
-    get() {
-        return this.data;
+    async get () {
+        const result = await this.axios.get(`${this.BACKEND_URL}/usuarios`);
+        return result.data;
     }
-    add(item) {
-        this.data.push(item)
+    async add(item) {
+        const result = await this.axios.post(`${this.BACKEND_URL}/usuarios`,item);
         return true
     }
-    update(atual, novo) {
-        const userAtual = this.data.find((user) => user.nome === atual.nome 
-                                                   && user.idade === atual.idade
-                                                   && user.cidade === atual.cidade
-                                                   && user.estado === atual.estado
-                                                   );
-        userAtual.nome = novo.nome;
-        userAtual.idade = novo.idade;
-        userAtual.cidade = novo.cidade;
-        userAtual.estado = novo.estado;
+    async update(atual, novo) {
+        const result = await this.axios.patch(`${this.BACKEND_URL}/usuarios/${atual.id}`, novo);
         return true
     }
-    remove(item) {
-        this.data = this.data.filter((user) => !(user.nome === item.nome 
-                                    && user.idade == item.idade
-                                    && user.cidade === item.cidade
-                                    && user.estado === item.estado)
-                                    );
-        
+    async remove(item) {
+        const result = await this.axios.delete(`${this.BACKEND_URL}/usuarios/${item.id}`);
         return true
     }
   }
