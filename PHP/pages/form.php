@@ -6,7 +6,7 @@
 <body>
     <h1>Formulário em PHP</h1>
     
-    <form method="GET" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" required><br><br>
         <input type="submit" value="Enviar">
@@ -14,7 +14,7 @@
 
     <?php
     // Verifica se o formulário foi enviado
-    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Obtém o nome enviado pelo formulário
         $nome = htmlspecialchars($_POST['nome']);
 
