@@ -1,5 +1,7 @@
 # API exemplo de CRUD em Node.js com Express
 
+Neste projeto é demonstrada uma aplicação Node.js usando o framework Express para fornecer uma API de gerenciamento de usuários. Essa aplicação não possui banco de dados e, dessa forma, ao ser interrompida os dados armazenados nela são perdidos.
+
 ### Requisitos
 - Node 20
 
