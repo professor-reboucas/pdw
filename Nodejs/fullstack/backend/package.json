@@ -1,0 +1,22 @@
+{
+  "name": "CRUD API",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "uuid": "^8.2.0",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}

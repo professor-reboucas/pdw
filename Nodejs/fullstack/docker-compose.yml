@@ -1,0 +1,45 @@
+version: '3.5'
+services:
+  frontend:
+    container_name: pdw-frontend
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: pdw/frontend
+    restart: always
+    ports:
+      - "3000:5000"
+    environment:
+      - BACKEND_URL:http://localhost:5000
+    volumes:
+      - ./frontend/src:/frontend/src
+  backend:
+    container_name: pdw-backend
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    image: pdw/backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASS=${POSTGRES_PASSWORD}
+      - DB_NAME=${POSTGRES_DB}
+      - DB_PORT=${DATABASE_PORT}
+      - DB_HOST=${DATABASE_HOST}
+    volumes:
+      - ./backend/src:/backend/src    
+  database:
+    container_name: pdw-database
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.data/database:/var/lib/postgresql/data
+      - ./database.sql:/docker-entrypoint-initdb.d/database.sql
