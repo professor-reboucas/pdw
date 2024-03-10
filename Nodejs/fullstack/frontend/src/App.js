@@ -1,180 +1,68 @@
-import "./App.css";
-import UsuarioService from "./services/usuario"
-import Grid from '@mui/material/Grid';
 import React, { useState } from "react";
-import axios from 'axios';
-
-const Usuario = new UsuarioService(axios, process.env.REACT_APP_BACKEND_URL);
+import UsuarioList from "./views/usuario/List"
+import UsuarioForm from "./views/usuario/Form"
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import { Typography } from "@mui/material";
+import UsuarioService from "./services/usuario";
+import axios from "axios";
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const UsrSrv = new UsuarioService(axios, BACKEND_URL);
 
 function App() {
-  const [nome, setNome] = useState("");
-  const [idade, setIdade] = useState(null);
-  const [estado, setEstado] = useState("");
-  const [cidade, setCidade] = useState("");
-  const [usuarioList, setUsuarioList] = useState([]);
-  const [mostraForm, setMostraForm] = useState(false);
-  const [flagNovoCadastro, setFlagNovoCadastro] = useState(true);
-  const [usuarioEmEdicao, setUsuarioEmEdicao] = useState({});
-
-  const salvar = async () => {
-    const novo = {
-      nome: nome,
-      idade: idade,
-      cidade: cidade,
-      estado: estado
-    };
-    if (flagNovoCadastro){
-      await Usuario.add(novo);
-    } else {
-      await Usuario.update(usuarioEmEdicao, novo);
-      setUsuarioEmEdicao({})
-    }
-    await getUsuarios();
-    limpaForm();
+  const [listagem, setListagem] = useState([]);
+  const [usuarioEmEdicao, setUsuarioEmEdicao] = useState(false);
+  
+  const carregarUsuarios = async () => {
+    const lista = await UsrSrv.get();
+    setListagem(lista);
   }
+  carregarUsuarios();
 
-  const limpaForm = () => {
-    setNome("")
-    setIdade("")
-    setCidade("")
-    setEstado("")
-  }
-
-  const carregaForm = (dados) =>{
-    setNome(dados.nome);
-    setIdade(dados.idade);
-    setCidade(dados.cidade);
-    setEstado(dados.estado);
-  }
-
-  const getUsuarios = async () => {
-    const lista = await Usuario.get();
-    setUsuarioList(lista);
-  }
-
-  const abreForm = () => {
-    limpaForm();
-    setFlagNovoCadastro(true);
-    setMostraForm(true);
-  }
-
-  const updateUsuario = (item) => {
-    abreForm();
-    carregaForm(item);
-    setFlagNovoCadastro(false);
-    setUsuarioEmEdicao(item);
-  }
-
-  const removeUsuario = async (item) => {
-    await Usuario.remove(item);
-    await getUsuarios();
+  const novoUsuario = () => {
+    setUsuarioEmEdicao({
+      novo: true,
+      nome: "",
+      idade: "",
+      estado: "",
+      cidade: ""
+    }) 
   }
   
   return (
     <div className="App">
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={8}>
-          <div className="listagem">
-            <button onClick={getUsuarios}>Carregar</button>
-            {!mostraForm && (<button onClick={abreForm}>Novo</button>)}
-            {
-              (usuarioList.length === 0) ? (
-                <p>Nenhum usuário encontrado</p>
-              )
-              :
-              <Grid container spacing={2} p={3}>
-                <Grid item xs={3}>
-                  <b>Nome</b>
-                </Grid>
-                <Grid item xs={1}>
-                  <b>Idade</b>
-                </Grid>
-                <Grid item xs={2}>
-                  <b>Estado</b>
-                </Grid>
-                <Grid item xs={3}>
-                  <b>Cidade</b>
-                </Grid>
-                <Grid item xs={3}>
-                  <b>Ações</b>
-                </Grid>
-              {
-                (usuarioList.map((val, key) => (
-                  <React.Fragment key={key}>
-                    <Grid item xs={3}>
-                      <p>{val.nome}</p>
-                    </Grid>
-                    <Grid item xs={1}>
-                      <p>{val.idade}</p>
-                    </Grid>
-                    <Grid item xs={2}>
-                      <p>{val.estado}</p>
-                    </Grid>
-                    <Grid item xs={3}>
-                      <p>{val.cidade}</p>
-                    </Grid>
-                    <Grid item xs={3}>
-                      <button onClick={()=>updateUsuario(val)}>Alterar</button>
-                      <button onClick={()=>removeUsuario(val)}>Excluir</button>
-                      
-                    </Grid>
-                  </React.Fragment>
-                )))
-              }
-              </Grid>
-            }
-          </div>
-        </Grid>
-        {
-          mostraForm && (
-          <Grid item xs={12} md={4} >
-            <Grid item xs={12}>
-              <h4>Novo usuário</h4>
-              <label>Nome:</label>
-              <input
-                type="text"
-                onChange={(event) => {
-                  setNome(event.target.value);
-                }}
-                value={nome}
-              />
-            </Grid>  
-            <Grid item xs={12}>
-              <label>Idade:</label>
-              <input
-                type="number"
-                onChange={(event) => {
-                  setIdade(event.target.value);
-                }}
-                value={idade}
-              />
-            </Grid>  
-            <Grid item xs={12}>
-              <label>Estado:</label>
-              <input
-                type="text"
-                onChange={(event) => {
-                  setEstado(event.target.value);
-                }}
-                value={estado}
-              />
-            </Grid>  
-            <Grid item xs={12}>  
-              <label>Cidade:</label>
-              <input
-                type="text"
-                onChange={(event) => {
-                  setCidade(event.target.value);
-                }}
-                value={cidade}
-              />
-            </Grid>
-            <button onClick={salvar}>Salvar</button>
-            <button onClick={()=>setMostraForm(!mostraForm)}>Cancelar</button>
+      <Card sx={{ minWidth: 275 }}>
+        <CardContent>
+          <Typography variant="h5" component="div">
+            Cadastro de Usuários
+          </Typography>
+          <Paper>
+            <Box p={5} mt={2}>
+              <UsuarioList listagem={listagem} setUsuarioEmEdicao={setUsuarioEmEdicao} carregarUsuarios={carregarUsuarios} UsrSrv={UsrSrv} />
+            </Box>
+          </Paper>
+        </CardContent>
+        <CardActions>
+          {!usuarioEmEdicao && (<Button size="small" variant="contained" color="secondary" onClick={novoUsuario}>Novo</Button>)}
+        </CardActions>
 
-          </Grid>
+        {usuarioEmEdicao && (
+          <CardContent>
+            <Paper elevation={24}>
+              <Box p={5}>
+                <Typography variant="h6" component="div">
+                  {usuarioEmEdicao.novo ? "Novo" : "Alterando"} usuário
+                </Typography>
+                <UsuarioForm usuarioEmEdicao={usuarioEmEdicao} carregarUsuarios={carregarUsuarios} setUsuarioEmEdicao={setUsuarioEmEdicao} UsrSrv={UsrSrv}  />
+              </Box>
+            </Paper>
+          </CardContent>
         )}
-      </Grid>
+      </Card>
     </div>
   );
 }
