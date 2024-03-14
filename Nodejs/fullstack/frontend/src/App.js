@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UsuarioList from "./views/usuario/List"
 import UsuarioForm from "./views/usuario/Form"
 import Box from '@mui/material/Box';
@@ -14,6 +14,7 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const UsrSrv = new UsuarioService(axios, BACKEND_URL);
 
 function App() {
+  const [controle, setControle] = useState(0);
   const [listagem, setListagem] = useState([]);
   const [usuarioEmEdicao, setUsuarioEmEdicao] = useState(false);
   
@@ -21,7 +22,10 @@ function App() {
     const lista = await UsrSrv.get();
     setListagem(lista);
   }
-  carregarUsuarios();
+
+  useEffect(()=>{
+    carregarUsuarios();
+  },[controle])
 
   const novoUsuario = () => {
     setUsuarioEmEdicao({

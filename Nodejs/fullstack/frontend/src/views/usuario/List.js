@@ -52,8 +52,8 @@ function UsuarioList(props) {
                     <p>{val.cidade}</p>
                   </Grid>
                   <Grid item xs={3} spacing={50}>
-                      <Button size="small" variant="contained" onClick={()=>setUsuarioEmEdicao({...val, atual:val})} color="warning">Alterar</Button>
-                      <Button size="small" variant="contained" onClick={()=>removeUsuario(val)} color="error">Excluir</Button>
+                      <Button size="small" variant="contained" onClick={()=>{setUsuarioEmEdicao({...val, atual:val}); carregarUsuarios()}} color="warning">Alterar</Button>
+                      <Button size="small" variant="contained" onClick={()=>{removeUsuario(val); carregarUsuarios()}} color="error">Excluir</Button>
                   </Grid>
                 </React.Fragment>
               )))
